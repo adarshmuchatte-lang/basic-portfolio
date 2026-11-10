@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adarsh Muchatte — Developer Portfolio</title>
+<meta name="description" content="Adarsh Muchatte is an Information Technology student at VIT Vellore building full-stack, AI, cloud, and immersive 3D web experiences.">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Adarsh Muchatte — Developer Portfolio">
+<meta property="og:description" content="Full-stack, AWS, AI applications, and immersive 3D web experiences.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000000;--ink:#ffffff;--peach:#ffffff;--deep:#0a0a0a;--glass:rgba(255,255,255,0.05);
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;color:var(--ink);font:400 17px/1.6 'Hanken Grotesk',system-ui,sans-serif;background:var(--bg)}
+canvas#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+main{position:relative;z-index:1}
+section{padding:11vh 7vw;max-width:1250px}
+section.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;line-height:1.08;letter-spacing:-.02em}
+h1{font-weight:800;font-size:clamp(3rem,10.5vw,8.5rem);color:var(--ink)}
+h2{font-weight:500;font-size:clamp(1.7rem,4vw,3rem);margin-bottom:2rem}
+p{max-width:60ch;margin:0}
+.role{font-size:clamp(1rem,1.8vw,1.3rem);margin-top:1.4rem;max-width:44ch}
+.btns{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+.btn{font:500 1rem 'Hanken Grotesk',sans-serif;padding:.8rem 1.4rem;border-radius:99px;background:var(--ink);color:var(--bg);text-decoration:none;border:0;cursor:pointer;transition:transform .25s}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid rgba(255,255,255,0.3)}
+.btn:hover,.btn:focus-visible{transform:scale(1.06) rotate(-1.5deg);outline:3px solid var(--ink);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem}
+.card{padding:1.5rem;border-radius:26px 26px 26px 6px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.1);transition:transform .2s ease-out}
+.card h3{font-size:1.05rem;color:var(--ink);margin-bottom:.3rem}
+.card .meta{font-size:.9rem;opacity:.7;margin-bottom:.7rem}
+.card p{font-size:.98rem;margin-top:.5rem}
+.card.wide{grid-column:1/-1}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem}
+.tags span{font-size:.8rem;padding:.15rem .65rem;border-radius:99px;background:rgba(255,255,255,0.08);color:var(--ink);border:1px solid rgba(255,255,255,0.15)}
+ul{margin:.5rem 0 0;padding-left:1.1rem}li{margin:.35rem 0;font-size:.98rem}
+.skill{font-size:.98rem}.skill b{color:var(--ink);font-weight:500}
+.contact{display:grid;gap:.5rem;margin-top:1.5rem;font-size:1.05rem}
+#mail{user-select:all;font-weight:500;color:var(--ink)}
+#msg{min-height:1.5em;margin-top:.8rem;font-size:.95rem}
+.mq{overflow:hidden;white-space:nowrap;padding:1rem 0;transform:rotate(-2.5deg);margin:3rem -4vw;background:var(--ink);color:var(--bg);font:800 clamp(1.2rem,3vw,2rem) 'Unbounded',sans-serif}
+.mq div{display:inline-block;animation:mq 24s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+h1{animation:gl 5s infinite steps(1)}
+@keyframes gl{0%,91%,100%{text-shadow:none;transform:none}93%{text-shadow:5px 0 #888,-5px 0 #ccc;transform:translateX(4px) skewX(-4deg)}95%{text-shadow:-7px 2px #888,7px -2px #ccc;transform:translateX(-5px)}97%{text-shadow:3px 0 #fff;transform:skewX(3deg)}}
+.card{background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.08),transparent 65%),var(--glass);opacity:0;translate:0 60px;transition:transform .2s ease-out,opacity .9s,translate .9s cubic-bezier(.2,.8,.2,1)}
+.card.in{opacity:1;translate:0 0}
+.bp{position:fixed;border-radius:50%;pointer-events:none;z-index:9}
+#pb{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:left;transform:scaleX(0);background:var(--ink);z-index:15}
+.hint{margin-top:1rem;font-size:.95rem;opacity:.7}
+@media (prefers-reduced-motion:reduce){.card{opacity:1;translate:none}}
+footer{padding:4vh 7vw;font-size:.9rem;opacity:.5;position:relative;z-index:1}
+#cur{position:fixed;width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);pointer-events:none;z-index:9;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
+#cur.big{width:60px;height:60px;background:rgba(255,255,255,.15)}
+#load{position:fixed;inset:0;z-index:20;background:var(--deep);display:grid;place-items:center;font-family:'Unbounded';font-size:1.6rem;color:var(--ink);transition:opacity .8s}
+#load i{display:block;height:2px;width:0;background:var(--ink);margin-top:1rem;transition:width 1.2s}
+@media (hover:none){#cur{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* Portfolio polish */
+:root{--muted:rgba(255,255,255,.62);--line:rgba(255,255,255,.14)}
+body{overflow-x:hidden}
+.nav{position:absolute;top:0;left:0;width:100%;padding:26px 7vw;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:5}
+.brand{font:800 1.35rem 'Unbounded',sans-serif;color:#fff;text-decoration:none;letter-spacing:-.08em}
+.brand span{color:#a8a8a8}
+.navlinks{display:flex;gap:clamp(1rem,2.4vw,2.2rem)}
+.navlinks a,.nav-cta{color:rgba(255,255,255,.7);text-decoration:none;font-size:.9rem;transition:color .2s}
+.navlinks a:hover,.nav-cta:hover{color:#fff}
+.nav-cta{border:1px solid var(--line);border-radius:99px;padding:.6rem 1rem;color:#fff}
+.nav-cta span{margin-left:.4rem}
+.hero{padding-top:12vh!important}
+.hero h1{max-width:100%;font-size:clamp(3.2rem,10.2vw,8.8rem)}
+.role{color:rgba(255,255,255,.78)}
+.hint{color:var(--muted);font-size:.88rem}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#bdbdbd;box-shadow:0 0 12px #aaa;margin-right:.45rem;vertical-align:middle}
+.eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.section-intro{color:var(--muted);margin-top:-1rem;margin-bottom:2rem}
+section{scroll-margin-top:35px}
+#about p{color:rgba(255,255,255,.78)}
+.card{border-color:rgba(255,255,255,.13)}
+.card h3{line-height:1.3}
+.tags span{color:rgba(255,255,255,.78)}
+#contact{padding-bottom:13vh}
+#contact h2{max-width:12ch;font-size:clamp(2.2rem,6vw,5rem)}
+footer{border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+@media(max-width:700px){
+ .nav{padding:20px 6vw}.navlinks{gap:.8rem}.navlinks a{font-size:.78rem}.nav-cta{display:none}
+ section{padding:10vh 6vw}.hero{padding-top:15vh!important}.hint-extra{display:block;margin-top:.35rem}
+ .grid{grid-template-columns:1fr}.card.wide{grid-column:auto}.mq{margin-left:-6vw;margin-right:-6vw}
+}
+@media(max-width:390px){.navlinks{gap:.55rem}.navlinks a{font-size:.72rem}.brand{font-size:1.1rem}}
+@media(prefers-reduced-motion:reduce){.status-dot{box-shadow:none}}
+
+
+/* Featured projects: editorial showcase */
+.projects-editorial{max-width:1440px!important;padding-top:13vh!important}
+.projects-intro{max-width:900px;margin:0 0 clamp(3rem,7vw,6rem)}
+.eyebrow,.project-overline{display:flex;align-items:center;justify-content:space-between;gap:1rem;font:500 .72rem/1.4 monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.projects-intro h2{font-size:clamp(2.5rem,7vw,6.8rem);letter-spacing:-.075em;line-height:.99;margin:1.6rem 0 1.4rem}
+.muted-title{color:rgba(255,255,255,.42)}
+.projects-lede{font-size:clamp(1rem,1.5vw,1.25rem);color:rgba(255,255,255,.66);max-width:48ch}
+.project-feature{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr);align-items:center;gap:clamp(1.8rem,5vw,5.4rem);margin:0 0 clamp(5rem,10vw,9rem);padding:0;position:relative}
+.project-feature:nth-of-type(odd){grid-template-columns:minmax(300px,.84fr) minmax(0,1.16fr)}
+.project-feature:nth-of-type(odd) .project-art{order:2}.project-feature:nth-of-type(odd) .project-copy{order:1}
+.project-art{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#080808;min-height:280px;aspect-ratio:5/3;isolation:isolate}
+.project-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.06),transparent 35%,rgba(0,0,0,.3));mix-blend-mode:screen}
+.project-art svg{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1);transform:scale(1.005)}
+.project-feature:hover .project-art svg{transform:scale(1.035)}
+.art-index{position:absolute;bottom:1rem;left:1.1rem;z-index:1;font:500 .65rem monospace;letter-spacing:.17em;color:rgba(255,255,255,.76);text-transform:uppercase}
+.project-copy{max-width:560px;padding:1rem 0}
+.project-overline{margin-bottom:1.5rem;font-size:.68rem}
+.project-copy h3{font-size:clamp(1.9rem,3.8vw,4rem);letter-spacing:-.065em;line-height:1.04;margin-bottom:1.2rem;overflow-wrap:anywhere}
+.project-copy h3 span{color:rgba(255,255,255,.45)}
+.project-deck{font-size:clamp(1.05rem,1.5vw,1.3rem);font-weight:500;margin-bottom:.75rem}
+.project-description{font-size:.98rem;color:rgba(255,255,255,.67);line-height:1.75}
+.project-tags{margin-top:1.4rem;gap:.45rem}
+.project-tags span{background:rgba(255,255,255,.035);font-size:.72rem;padding:.25rem .65rem}
+.project-links{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.5rem}
+.link-unavailable{display:inline-flex;align-items:center;min-height:36px;padding:.45rem .75rem;border:1px dashed rgba(255,255,255,.22);color:rgba(255,255,255,.46);font-size:.78rem;cursor:default}
+.other-work{padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.2)}
+.other-work-heading{display:flex;justify-content:space-between;align-items:baseline;gap:2rem;margin:0 0 1.6rem}
+.other-work-heading p{color:rgba(255,255,255,.6);font-size:.95rem}
+.other-work-grid .card{border-radius:0;background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.12);backdrop-filter:none;-webkit-backdrop-filter:none}
+.other-work-grid .card h3{font-size:1.1rem;margin:.4rem 0 .8rem}
+.other-work-grid .card p{color:rgba(255,255,255,.65);font-size:.92rem;line-height:1.7}
+.other-work-grid .project-overline{margin-bottom:.8rem;font-size:.61rem}
+.other-work-wide{grid-column:1/-1}
+.reveal{opacity:1;transform:none}
+.js-reveal .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1)}
+.js-reveal .reveal.is-visible{opacity:1;transform:translateY(0)}
+.js-reveal .project-feature:nth-of-type(2){transition-delay:.05s}
+@media(max-width:800px){.project-feature,.project-feature:nth-of-type(odd){grid-template-columns:1fr;gap:1.35rem;margin-bottom:4.5rem}.project-feature:nth-of-type(odd) .project-art,.project-feature:nth-of-type(odd) .project-copy{order:initial}.project-art{aspect-ratio:16/10;min-height:220px}.project-copy{padding:0}.projects-editorial{padding-left:5vw!important;padding-right:5vw!important}.other-work-heading{display:block}.other-work-heading p{margin-top:.7rem}}
+@media(max-width:480px){.projects-intro h2{font-size:clamp(2.5rem,13vw,4rem)}.project-copy h3{font-size:2rem}.project-art{aspect-ratio:4/3;min-height:190px}.project-overline{font-size:.6rem}.project-links{gap:.4rem}.link-unavailable{font-size:.7rem;padding:.4rem .55rem}.other-work-grid{grid-template-columns:1fr}.other-work-wide{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){.project-art svg,.js-reveal .reveal{transition:none!important}.js-reveal .reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="load"><div>Adarsh<i id="bar"></i></div></div>
+<div id="cur"></div>
+<div id="pb"></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<main>
+<nav class="nav" aria-label="Main navigation">
+  <a class="brand" href="#top" aria-label="Adarsh Muchatte home">AM<span>.</span></a>
+  <div class="navlinks">
+    <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#learning">Journey</a>
+  </div>
+  <a class="nav-cta" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
+</nav>
+<section class="hero" id="top">
+ <h1><span data-s>Adarsh</span><br><span data-s>Muchatte</span></h1>
+ <div class="role">IT student at VIT Vellore building full-stack products, AI-powered tools, cloud systems, and immersive 3D experiences.</div>
+ <div class="hint"><span class="status-dot"></span> Open to software, full-stack &amp; AI internships <span class="hint-extra">· Move your cursor to explore the 3D scene</span></div>
+ <div class="btns">
+  <a class="btn" href="#projects">See my projects</a>
+  <a class="btn alt" href="#contact">Contact me</a>
+ </div>
+</section>
+
+<div class="mq" aria-hidden="true"><div><span>Full-stack ✦ AWS ✦ Three.js ✦ 3D web ✦ AI apps ✦ Node.js ✦ IoT ✦ Full-stack ✦ AWS ✦ Three.js ✦ 3D web ✦ AI apps ✦ Node.js ✦ IoT ✦ </span><span>Full-stack ✦ AWS ✦ Three.js ✦ 3D web ✦ AI apps ✦ Node.js ✦ IoT ✦ Full-stack ✦ AWS ✦ Three.js ✦ 3D web ✦ AI apps ✦ Node.js ✦ IoT ✦ </span></div></div>
+<section id="about">
+ <h2>About</h2>
+ <p>I like building things for the browser and learning how to run them on AWS. My main projects are CloudArchitect AI, a team project that recommends AWS architectures, and two immersive 3D websites, ECLIPSE and ABYSS. I practise data structures and algorithms in C++ and Java.</p>
+ <p style="margin-top:1rem">I'm looking for a software, full-stack or AI-application internship where I can learn from an engineering team and contribute.</p>
+</section>
+
+<section id="skills">
+ <h2>Skills</h2>
+ <div class="grid">
+  <div class="card skill"><h3>Languages</h3>Java, C, C++, Python, JavaScript, SQL</div>
+  <div class="card skill"><h3>Web</h3>HTML5, CSS3, JavaScript, Three.js, responsive design, REST APIs. Learning React.js, Express.js and MongoDB.</div>
+  <div class="card skill"><h3>Cloud and backend</h3>Node.js on AWS Lambda, Amazon Cognito, API Gateway, DynamoDB, Amazon Bedrock, AWS SAM / CloudFormation</div>
+  <div class="card skill"><h3>AI</h3>Prompt engineering, generative AI and LLM concepts, LLM integration through Amazon Bedrock</div>
+  <div class="card skill"><h3>Embedded and IoT</h3>Arduino, RFID (MFRC522), PIR sensor, GSM module, Embedded C/C++</div>
+  <div class="card skill"><h3>Tools</h3>Git, GitHub, VS Code, PowerShell, Netlify, Microsoft Power BI</div>
+ </div>
+</section>
+
+<section id="projects" class="projects-editorial">
+ <div class="projects-intro reveal">
+  <div class="eyebrow"><span>SELECTED WORK</span><span>01 — 03 / FEATURED</span></div>
+  <h2>Built to explore<br><span class="muted-title">what comes next.</span></h2>
+  <p class="projects-lede">A selection of experiments across cloud architecture, immersive worlds, and interactive storytelling.</p>
+ </div>
+
+ <article class="project-feature project-cloud reveal" aria-labelledby="project-cloud-title">
+  <div class="project-art cloud-art" aria-label="Original abstract illustration of a cloud architecture network" role="img">
+   <svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><radialGradient id="cloudGlow"><stop stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="cloudLine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".18"/></linearGradient></defs>
+    <rect width="900" height="540" fill="#090909"/><circle cx="450" cy="270" r="280" fill="url(#cloudGlow)"/>
+    <g stroke="#fff" stroke-opacity=".14" stroke-width="1"><path d="M0 90H900M0 180H900M0 270H900M0 360H900M0 450H900M90 0V540M180 0V540M270 0V540M360 0V540M450 0V540M540 0V540M630 0V540M720 0V540M810 0V540"/></g>
+    <g fill="none" stroke="url(#cloudLine)" stroke-width="2"><path d="M450 270L245 160L130 270L245 380L450 270L650 155L770 270L650 385Z"/><path d="M245 160L650 155M130 270H770M245 380L650 385M450 270V95M450 270V445" stroke-dasharray="5 8"/></g>
+    <g fill="#101010" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"><rect x="382" y="225" width="136" height="90" rx="12"/><rect x="197" y="122" width="96" height="76" rx="10"/><rect x="82" y="238" width="96" height="64" rx="10"/><rect x="197" y="348" width="96" height="64" rx="10"/><rect x="602" y="118" width="96" height="74" rx="10"/><rect x="722" y="238" width="96" height="64" rx="10"/><rect x="602" y="352" width="96" height="64" rx="10"/></g>
+    <g fill="#fff" opacity=".85"><circle cx="450" cy="270" r="6"/><circle cx="245" cy="160" r="4"/><circle cx="130" cy="270" r="4"/><circle cx="245" cy="380" r="4"/><circle cx="650" cy="155" r="4"/><circle cx="770" cy="270" r="4"/><circle cx="650" cy="385" r="4"/></g>
+    <g fill="#fff" font-family="monospace" text-anchor="middle"><text x="450" y="260" font-size="12" letter-spacing="3">CLOUD</text><text x="450" y="282" font-size="12" letter-spacing="2">ARCHITECT AI</text><text x="245" y="153" font-size="10">IDENTITY</text><text x="245" y="169" font-size="10">COGNITO</text><text x="130" y="266" font-size="10">API</text><text x="130" y="282" font-size="10">GATEWAY</text><text x="245" y="375" font-size="10">DATA</text><text x="245" y="391" font-size="10">DYNAMODB</text><text x="650" y="149" font-size="10">COMPUTE</text><text x="650" y="165" font-size="10">LAMBDA</text><text x="770" y="266" font-size="10">BEDROCK</text><text x="770" y="282" font-size="10">EXPLAIN</text><text x="650" y="379" font-size="10">EXPORT</text><text x="650" y="395" font-size="10">GRAPH</text></g>
+    <text x="34" y="42" fill="#fff" opacity=".55" font-family="monospace" font-size="11" letter-spacing="3">SYSTEM MAP / 001</text><text x="866" y="508" fill="#fff" opacity=".45" text-anchor="end" font-family="monospace" font-size="10">RULE-BASED RECOMMENDATION</text>
+   </svg><span class="art-index">01 / CLOUD SYSTEMS</span>
+  </div>
+  <div class="project-copy">
+   <div class="project-overline"><span>01</span><span>Cloud · AI · AWS</span></div>
+   <h3 id="project-cloud-title">CloudArchitect <span>AI</span></h3>
+   <p class="project-deck">Make cloud architecture easier to reason about.</p>
+   <p class="project-description">A team-built AWS architecture recommendation app. Rule-based logic selects services, while Amazon Bedrock explains the recommendation in plain language. Users can explore an architecture graph and export it as PNG or SVG.</p>
+   <div class="tags project-tags"><span>Node.js 20</span><span>Lambda</span><span>API Gateway</span><span>Cognito</span><span>DynamoDB</span><span>Bedrock</span><span>AWS SAM</span></div>
+   <div class="project-links" aria-label="CloudArchitect AI project links"><span class="link-unavailable">Demo URL not supplied</span><span class="link-unavailable">Repository URL not supplied</span></div>
+   <!-- TODO: Replace the two unavailable labels with real anchors only after verifying the live demo and repository URLs. -->
+  </div>
+ </article>
+
+ <article class="project-feature project-abyss reveal" aria-labelledby="project-abyss-title">
+  <div class="project-art abyss-art" aria-label="Original abstract illustration of an underwater descent" role="img">
+   <svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><linearGradient id="abyssBg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#252525"/><stop offset=".5" stop-color="#101010"/><stop offset="1" stop-color="#030303"/></linearGradient><radialGradient id="abyssLight"><stop stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <rect width="900" height="540" fill="url(#abyssBg)"/><ellipse cx="455" cy="30" rx="330" ry="210" fill="url(#abyssLight)"/>
+    <g stroke="#fff" fill="none" stroke-opacity=".18"><path d="M0 110Q210 70 450 118T900 104M0 180Q210 140 450 188T900 174M0 260Q210 220 450 268T900 254M0 355Q210 315 450 363T900 349M0 455Q210 415 450 463T900 449"/><path d="M110 0Q180 180 105 540M300 0Q360 180 290 540M600 0Q540 180 610 540M790 0Q720 180 800 540" stroke-dasharray="2 10"/></g>
+    <g fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"><path d="M450 90V450" stroke-dasharray="3 8"/><path d="M430 135L450 115L470 135M430 405L450 425L470 405"/><path d="M210 340Q280 275 350 340T490 340T630 340T770 340" stroke-opacity=".35"/></g>
+    <g fill="#fff" opacity=".8"><circle cx="450" cy="170" r="3"/><circle cx="450" cy="245" r="2"/><circle cx="450" cy="315" r="4"/><circle cx="450" cy="380" r="2"/><circle cx="330" cy="225" r="2"/><circle cx="590" cy="285" r="3"/><circle cx="260" cy="410" r="2"/><circle cx="675" cy="455" r="2"/></g>
+    <g fill="none" stroke="#fff" stroke-opacity=".75"><path d="M340 260Q375 230 410 260L430 280L410 300Q375 330 340 300L320 280Z"/><path d="M520 380Q550 350 580 380L600 400L580 420Q550 450 520 420L500 400Z"/><path d="M360 280H390M540 400H570"/></g>
+    <g fill="#fff" font-family="monospace"><text x="34" y="42" opacity=".55" font-size="11" letter-spacing="3">OCEAN / DESCENT LOG</text><text x="34" y="485" font-size="12" letter-spacing="2">01 — SUNLIT</text><text x="34" y="506" opacity=".65" font-size="10">02 — TWILIGHT / 03 — MIDNIGHT / 04 — ABYSS</text><text x="866" y="42" text-anchor="end" opacity=".6" font-size="10">DEPTH IS A STORY</text></g>
+   </svg><span class="art-index">02 / INTO THE BLUE</span>
+  </div>
+  <div class="project-copy">
+   <div class="project-overline"><span>02</span><span>Immersive web · Ocean</span></div>
+   <h3 id="project-abyss-title">ABYSS <span>— The Last Frontier</span></h3>
+   <p class="project-deck">A cinematic descent through the layers of the ocean.</p>
+   <p class="project-description">An underwater exploration experience built around scroll-driven depth zones, deep-sea creatures, and ocean facts. The visual pacing, lighting, and animation are designed to make the visitor feel as though they are descending into the deep.</p>
+   <div class="tags project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Scroll interaction</span><span>Motion design</span></div>
+   <div class="project-links" aria-label="ABYSS project links"><span class="link-unavailable">Demo URL not supplied</span><span class="link-unavailable">Repository URL not supplied</span></div>
+   <!-- TODO: Add verified ABYSS demo/repository URLs here; do not link to unrelated profiles. -->
+  </div>
+ </article>
+
+ <article class="project-feature project-eclipse reveal" aria-labelledby="project-eclipse-title">
+  <div class="project-art eclipse-art" aria-label="Original abstract illustration of a planet and orbital path in deep space" role="img">
+   <svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><radialGradient id="planetShade" cx="32%" cy="27%"><stop stop-color="#f4f4f4"/><stop offset=".22" stop-color="#888"/><stop offset=".62" stop-color="#292929"/><stop offset="1" stop-color="#050505"/></radialGradient><radialGradient id="eclipseGlow"><stop stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <rect width="900" height="540" fill="#050505"/><circle cx="475" cy="260" r="275" fill="url(#eclipseGlow)"/>
+    <g fill="#fff"><circle cx="84" cy="110" r="1.5" opacity=".7"/><circle cx="160" cy="390" r="1" opacity=".6"/><circle cx="740" cy="90" r="1.3" opacity=".7"/><circle cx="810" cy="350" r="1" opacity=".6"/><circle cx="690" cy="455" r="1.5" opacity=".6"/><circle cx="310" cy="80" r="1" opacity=".7"/><circle cx="565" cy="80" r="1" opacity=".45"/><circle cx="115" cy="260" r="1" opacity=".4"/></g>
+    <g fill="none" stroke="#fff" stroke-opacity=".28"><ellipse cx="500" cy="270" rx="315" ry="100" transform="rotate(-23 500 270)"/><ellipse cx="500" cy="270" rx="265" ry="150" transform="rotate(32 500 270)" stroke-dasharray="4 9"/><ellipse cx="500" cy="270" rx="210" ry="70" transform="rotate(66 500 270)"/></g>
+    <circle cx="500" cy="270" r="116" fill="url(#planetShade)" stroke="#fff" stroke-opacity=".45"/><path d="M410 198Q500 150 590 214" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/><path d="M395 300Q500 355 600 285" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="9"/>
+    <path d="M185 395Q365 320 570 225T770 145" fill="none" stroke="#fff" stroke-width="1.5" stroke-opacity=".75"/><circle cx="770" cy="145" r="5" fill="#fff"/><circle cx="185" cy="395" r="3" fill="#fff"/>
+    <g fill="#fff" font-family="monospace"><text x="34" y="42" opacity=".55" font-size="11" letter-spacing="3">MISSION / ECLIPSE-01</text><text x="34" y="475" font-size="12" letter-spacing="2">WORMHOLE → UNKNOWN WORLD</text><text x="34" y="497" opacity=".55" font-size="10">SCROLL-DRIVEN SPACE JOURNEY</text><text x="866" y="508" text-anchor="end" opacity=".5" font-size="10">SIGNAL RECEIVED</text></g>
+   </svg><span class="art-index">03 / BEYOND ORBIT</span>
+  </div>
+  <div class="project-copy">
+   <div class="project-overline"><span>03</span><span>3D web · Space</span></div>
+   <h3 id="project-eclipse-title">ECLIPSE <span>— The Last Frontier</span></h3>
+   <p class="project-deck">A voyage from an unknown world to the edge of a black hole.</p>
+   <p class="project-description">A scroll-led space journey that moves through an unknown planet, a wormhole, and a black hole. A mission-progress tracker and sound toggle give the experience a sense of movement and narrative.</p>
+   <div class="tags project-tags"><span>Vite</span><span>TanStack</span><span>Interactive 3D</span><span>Scroll narrative</span><span>Netlify</span></div>
+   <div class="project-links" aria-label="ECLIPSE project links"><span class="link-unavailable">Demo URL not supplied</span><span class="link-unavailable">Repository URL not supplied</span></div>
+   <!-- TODO: Add verified ECLIPSE demo/repository URLs here after checking the actual deployment and repository. -->
+  </div>
+ </article>
+
+ <div class="other-work reveal">
+  <div class="other-work-heading"><span class="eyebrow">MORE EXPERIMENTS</span><p>Additional builds across AI, systems, and connected devices.</p></div>
+  <div class="grid other-work-grid">
+   <article class="card"><div class="project-overline"><span>04</span><span>AI / Data</span></div><h3>SentiBot</h3><p>A sentiment chatbot with an analytics view and admin panel; chat history is stored in PostgreSQL and can be exported as TXT or PDF.</p><div class="tags"><span>Python</span><span>Flask</span><span>PostgreSQL</span></div></article>
+   <article class="card"><div class="project-overline"><span>05</span><span>Embedded / IoT</span></div><h3>Smart Luggage Security</h3><p>An RFID-based access system paired with a PIR motion sensor and GSM alerts to help detect unexpected baggage movement.</p><div class="tags"><span>Arduino</span><span>RFID</span><span>PIR</span><span>GSM</span></div></article>
+   <article class="card"><div class="project-overline"><span>06</span><span>Interactive 3D</span></div><h3>Exodus</h3><p>A sci-fi spaceship experience centred on the EXODUS-01 generation ship, with space environments and mission telemetry.</p><div class="tags"><span>HTML</span><span>JavaScript</span></div></article>
+   <article class="card"><div class="project-overline"><span>07</span><span>Interactive 3D</span></div><h3>Dimensional Portal</h3><p>A portal-themed web experience using particles and dimensional visual effects to create an atmospheric interactive scene.</p><div class="tags"><span>Three.js</span><span>Particles</span></div></article>
+   <article class="card other-work-wide"><div class="project-overline"><span>08+</span><span>Selected concepts and systems</span></div><h3>Other work</h3><p><b>AI, cloud and data:</b> AI chatbot with ChatGPT and prompt engineering, AI Resume Analyzer (concept), AI-based accident and driver risk detection, storage tier recommendation for medical image repositories, Sales Analytics Dashboard in Power BI, Smart Power Consumption Optimization (IoT concepts).</p><p><b>Systems and embedded:</b> Library Management System in C, Hospital Management System (requirements, modelling, planning), memory-mapped concurrent file analyzer, and Smart Shopping Management System.</p></article>
+  </div>
+ </div>
+</section>
+<section id="learning">
+ <h2>Certifications and achievements</h2>
+ <div class="grid">
+  <div class="card"><h3>Certifications</h3><ul>
+   <li>Python for Data Science, IBM Skills Network (Oct 2026)</li>
+   <li>AI Literacy, IBM (Jul 2026)</li>
+   <li>AI for Beginners, HP LIFE (Jul 2026)</li>
+   <li>Prompt Engineering, One Million Prompters</li>
+   <li>Intro to Generative AI, AWS</li>
+   <li>Intro to Machine Learning, Kaggle</li>
+   <li>MongoDB Atlas; Developing AI Solutions on Azure</li>
+  </ul></div>
+  <div class="card"><h3>Virtual job simulations</h3><div class="meta">On Forage. These are not employment.</div><ul>
+   <li>Skyscanner Front-End Engineering</li><li>BCG X GenAI</li><li>TCS GenAI Data Analytics</li><li>British Airways Data Science</li><li>Deloitte Data Analytics</li><li>BCG Platinion IT Architecture</li><li>Goldman Sachs Internal Audit</li></ul></div>
+  <div class="card"><h3>Achievements</h3><ul>
+   <li>HackerRank Orchestrate, Halloween Edition: registered participant</li>
+   <li>MHT CET 2024: 97.85 percentile (PCM)</li></ul>
+   <h3 style="margin-top:1.3rem">Education</h3>
+   <p><b>VIT Vellore</b>, B.Tech Information Technology, 2024 to 2028.<br>Class XII: 72%. Class X: 95.4%.</p></div>
+ </div>
+</section>
+
+<section id="contact">
+ <h2>Contact</h2>
+ <p>Looking for an internship in software, full-stack or AI applications. Send me a message.</p>
+ <div class="btns">
+  <a class="btn" id="gmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=adarshmuchatte@gmail.com&su=Hello%20Adarsh" target="_blank" rel="noopener noreferrer">Write in Gmail</a>
+  <button class="btn alt" id="copy" type="button">Copy my email</button>
+  <a class="btn alt" href="https://www.linkedin.com/in/adarshmuchatte" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a class="btn alt" href="https://github.com/adarshmuchatte-lang" target="_blank" rel="noopener noreferrer">GitHub</a>
+ </div>
+ <div class="contact">
+  <div>Email: <span id="mail">adarshmuchatte@gmail.com</span></div>
+  <div>Phone: +91 7499557455</div>
+  
+ </div>
+ <div id="msg" role="status"></div>
+</section>
+</main>
+<footer><span>© 2026 Adarsh Muchatte</span><span>Designed with curiosity. Built for the web.</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+ document.documentElement.classList.add('js-reveal');
+ var revealItems=document.querySelectorAll('.reveal');
+ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  var revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -35px 0px'});
+  revealItems.forEach(function(item){revealObserver.observe(item)});
+ }else{revealItems.forEach(function(item){item.classList.add('is-visible')})}
+ var mailEl=document.getElementById('mail'),msg=document.getElementById('msg');
+ document.getElementById('copy').addEventListener('click',function(){
+  var t=mailEl.textContent.trim();
+  function done(ok){msg.textContent=ok?'Email copied: '+t:'Could not copy automatically. The address is selected, press Ctrl+C (or hold and copy on mobile).';
+   if(!ok){var r=document.createRange();r.selectNodeContents(mailEl);var s=getSelection();s.removeAllRanges();s.addRange(r)}}
+  function fallback(){try{var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=document.execCommand('copy');a.remove();done(ok)}catch(e){done(false)}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done(true)},fallback)}else fallback();
+ });
+
+ var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ var canvas=document.getElementById('gl');
+ var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+ var mobile=innerWidth<700;
+ renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.5:2));
+ var scene=new THREE.Scene();
+ var cam=new THREE.PerspectiveCamera(50,1,.1,100);cam.position.z=6;
+
+ var uni={t:{value:0},amp:{value:.35},c1:{value:new THREE.Color('#ffffff')},c2:{value:new THREE.Color('#111111')}};
+ var mat=new THREE.ShaderMaterial({uniforms:uni,
+  vertexShader:'uniform float t,amp;varying vec3 n;varying vec3 v;void main(){vec3 p=position;float d=sin(p.x*2.1+t)*sin(p.y*2.3+t*1.2)*sin(p.z*2.0+t*.8);p+=normal*d*amp;n=normalize(normalMatrix*normal);vec4 mv=modelViewMatrix*vec4(p,1.);v=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}',
+  fragmentShader:'uniform vec3 c1,c2;varying vec3 n;varying vec3 v;void main(){float f=pow(1.-max(dot(normalize(n),normalize(v)),0.),2.2);vec3 col=mix(c2,c1,smoothstep(-.2,1.,n.y*.6+f));col+=f*.3;gl_FragColor=vec4(col,1.);}'});
+ var blob=new THREE.Mesh(new THREE.IcosahedronGeometry(1.6,mobile?32:64),mat);
+ scene.add(blob);
+ var rings=new THREE.Group();
+ for(var i=0;i<3;i++){var r=new THREE.Mesh(new THREE.TorusGeometry(2.4+i*.45,.012,8,160),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.25-i*.06}));r.rotation.set(i*1.1,i*.7,0);rings.add(r)}
+ blob.add(rings);
+ var N=mobile?500:1200,pos=new Float32Array(N*3);
+ for(var k=0;k<N*3;k++)pos[k]=(Math.random()-.5)*30;
+ var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+ var pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.03,color:0xffffff,transparent:true,opacity:.4}));
+ scene.add(pts);
+ var shapes=[],geos=[new THREE.OctahedronGeometry(.5),new THREE.TorusKnotGeometry(.35,.1,64,8),new THREE.IcosahedronGeometry(.45),new THREE.TetrahedronGeometry(.55)];
+ for(var q=0;q<(mobile?8:16);q++){var sm=new THREE.Mesh(geos[q%4],new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true,transparent:true,opacity:.2}));sm.position.set((Math.random()-.5)*16,(Math.random()-.5)*10,(Math.random()-.5)*8-2);sm.userData={s:Math.random()*.02+.005,o:Math.random()*6};scene.add(sm);shapes.push(sm)}
+
+ function resize(){var w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();mobile=w<700}
+ addEventListener('resize',resize);resize();
+
+ var mx=0,my=0,sx=0,sy=0,prog=0,sp=0,hover=0,hoverT=0;
+ var ray=new THREE.Raycaster(),m2=new THREE.Vector2(),cur=document.getElementById('cur');
+ addEventListener('pointermove',function(e){
+  mx=e.clientX/innerWidth*2-1;my=-(e.clientY/innerHeight*2-1);
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  m2.set(mx,my);ray.setFromCamera(m2,cam);
+  hoverT=ray.intersectObject(blob).length?1:0;
+  cur.classList.toggle('big',!!(hoverT||e.target.closest('a,button,.card')))});
+ var lastY=0,vel=0;
+ addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-innerHeight;prog=h>0?scrollY/h:0;vel=Math.min(vel+Math.abs(scrollY-lastY)/80,3);lastY=scrollY},{passive:true});
+ addEventListener('pointerdown',function(){if(hoverT)vel=3});
+ document.querySelectorAll('.card').forEach(function(c){
+  c.addEventListener('pointermove',function(e){var b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;c.style.transform='perspective(800px) rotateY('+x*6+'deg) rotateX('+-y*6+'deg)';c.style.setProperty('--mx',(x+.5)*100+'%');c.style.setProperty('--my',(y+.5)*100+'%')});
+  c.addEventListener('pointerleave',function(){c.style.transform=''})});
+
+ var A=[new THREE.Color('#ffffff'),new THREE.Color('#cccccc'),new THREE.Color('#eeeeee'),new THREE.Color('#999999'),new THREE.Color('#ffffff')];
+ var B=[new THREE.Color('#0a0a0a'),new THREE.Color('#000000'),new THREE.Color('#141414'),new THREE.Color('#050505'),new THREE.Color('#0a0a0a')];
+ function stops(S,p,out){var f=p*(S.length-1),i=Math.min(Math.floor(f),S.length-2);out.copy(S[i]).lerp(S[i+1],f-i)}
+
+ var clock=new THREE.Clock();
+ function frame(){
+  var t=clock.getElapsedTime();
+  sp+=(prog-sp)*.06;hover+=(hoverT-hover)*.08;
+  sx+=(mx-sx)*.05;sy+=(my-sy)*.05;
+  vel*=.93;var v1=Math.min(vel,1.5);uni.t.value=reduce?0:t*(.7+v1*2);uni.amp.value=.3+hover*.3+v1*.45;
+  stops(A,sp,uni.c1.value);stops(B,sp,uni.c2.value);
+  var side=mobile?0:2.3;
+  blob.position.x=mobile?0:(sp<.05?1.9:Math.cos(sp*Math.PI*5)*side);
+  blob.position.y=mobile?1.8-sp*.8:Math.sin(sp*Math.PI*3)*.7;
+  blob.scale.setScalar((mobile?.6:1)*(1+hover*.12));
+  blob.rotation.y=sp*Math.PI*4+(reduce?0:t*.15);blob.rotation.x=sy*.4;
+  rings.rotation.z=reduce?0:t*.1;rings.rotation.x=sp*4;
+  pts.rotation.y=sp*1.5+(reduce?0:t*.01);
+  cam.fov=50+v1*22;cam.updateProjectionMatrix();cam.position.x=sx*.8;cam.position.y=sy*.5;cam.position.z=6-sp*1.2;cam.lookAt(0,0,0);
+  shapes.forEach(function(s){var k=1+v1*8;s.rotation.x+=s.userData.s*k;s.rotation.y+=s.userData.s*1.3*k;s.position.y+=Math.sin(t+s.userData.o)*.004});
+  pb&&(pb.style.transform='scaleX('+sp+')');renderer.render(scene,cam);requestAnimationFrame(frame)}
+ frame();
+
+ var chars='!<>-_[]{}=+*^?#ABCXYZ';
+ function scramble(el){var txt=el.dataset.t||(el.dataset.t=el.textContent),n=0;var id=setInterval(function(){el.textContent=txt.split('').map(function(c,i){return i<n?c:chars[Math.floor(Math.random()*chars.length)]}).join('');n+=.5;if(n>txt.length){el.textContent=txt;clearInterval(id)}},40)}
+ if(!reduce){setTimeout(function(){document.querySelectorAll('[data-s]').forEach(scramble)},1300);document.querySelector('h1').addEventListener('mouseenter',function(){document.querySelectorAll('[data-s]').forEach(scramble)})}
+ var pb=document.getElementById('pb');
+ var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');cio.unobserve(e.target)}})},{threshold:.12});
+ document.querySelectorAll('.card').forEach(function(c){cio.observe(c)});
+ var hio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!reduce)scramble(e.target);hio.unobserve(e.target)}})},{threshold:.6});
+ document.querySelectorAll('h2').forEach(function(h){hio.observe(h)});
+ function dot(x,y,sz,col,dx,dy,dur){var d=document.createElement('i');d.className='bp';d.style.cssText='left:'+x+'px;top:'+y+'px;width:'+sz+'px;height:'+sz+'px;background:'+col;document.body.appendChild(d);d.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:'translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px)) scale(0)',opacity:0}],{duration:dur,easing:'cubic-bezier(.2,.8,.2,1)'});setTimeout(function(){d.remove()},dur)}
+ var cols=['#ffffff','#cccccc','#888888','#dddddd'],lt=0;
+ if(!reduce){
+  addEventListener('pointermove',function(e){var n=performance.now();if(n-lt>45){lt=n;dot(e.clientX,e.clientY,5,cols[Math.floor(Math.random()*4)],(Math.random()-.5)*20,15+Math.random()*20,600)}});
+  addEventListener('pointerdown',function(e){for(var i=0;i<18;i++){var a=Math.random()*6.28,r=50+Math.random()*100;dot(e.clientX,e.clientY,4+Math.random()*6,cols[i%4],Math.cos(a)*r,Math.sin(a)*r,600+Math.random()*400)}})}
+ document.querySelectorAll('.btn').forEach(function(b){b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.translate=(e.clientX-r.left-r.width/2)*.25+'px '+(e.clientY-r.top-r.height/2)*.35+'px'});b.addEventListener('pointerleave',function(){b.style.translate=''})});
+ addEventListener('keydown',function(e){if(e.key==='w'||e.key==='W')vel=3});
+ var bar=document.getElementById('bar'),load=document.getElementById('load');
+ requestAnimationFrame(function(){bar.style.width='100%'});
+ setTimeout(function(){load.style.opacity=0;setTimeout(function(){load.remove()},850)},1300);
+})();
+</script>
+</body>
+</html>
